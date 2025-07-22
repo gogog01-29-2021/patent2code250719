@@ -32,3 +32,12 @@ with open("patent_meta.json", "w") as f:
     json.dump(records, f, indent=2)
 
 print(f"✅ Indexed {len(records)} docs into patent.faiss (dim={vec_np.shape[1]})")
+import time, json
+from decimal import Decimal
+cost_log = []
+def log_call(model, n_tokens, cost_usd):
+    cost_log.append({"ts": time.time(), "model": model, "tokens": n_tokens, "cost": float(cost_usd)})
+
+# after building:
+with open("logs/embedding_cost.json", "w") as f:
+    json.dump(cost_log, f, indent=2)
